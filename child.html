@@ -12,16 +12,31 @@
   img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* fills window */
+    object-fit: cover;
   }
 </style>
 </head>
 
 <body>
 
-<img src="You_Are_An_Idiot_screen.gif" alt="gif">
+<img src="You_Are_An_Idiot.gif" alt="gif">
+
+<audio id="sound" loop>
+  <source src="Nzg0OTU4Njk3ODUwNzA_VoUcsAfm_2fRY.mp3" type="audio/mpeg">
+</audio>
 
 <script>
+const audio = document.getElementById("sound");
+
+// try to play when page loads
+audio.play().catch(() => {
+  // browser blocked autoplay — wait for interaction
+  document.addEventListener("click", () => {
+    audio.play();
+  }, { once: true });
+});
+
+// notify parent when closing
 window.addEventListener("beforeunload", () => {
   if (window.opener) {
     window.opener.postMessage("childClosed", "*");
