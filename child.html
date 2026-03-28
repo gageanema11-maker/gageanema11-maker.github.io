@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Close this window</h2>
+
+<script>
+window.addEventListener("beforeunload", () => {
+  if (window.opener) {
+    window.opener.postMessage("childClosed", "*");
+  }
+});
+</script>
+
+</body>
+</html>

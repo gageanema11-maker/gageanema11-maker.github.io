@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<button onclick="spawn()">Open First Window</button>
+
+<script>
+function randomPosition(width, height) {
+  const maxX = screen.availWidth - width;
+  const maxY = screen.availHeight - height;
+
+  return {
+    left: Math.floor(Math.random() * maxX),
+    top: Math.floor(Math.random() * maxY)
+  };
+}
+
+function openRandomWindow() {
+  const w = 400;
+  const h = 300;
+  const pos = randomPosition(w, h);
+
+  window.open(
+    "child.html",
+    "_blank",
+    `width=${w},height=${h},left=${pos.left},top=${pos.top}`
+  );
+}
+
+function spawn() {
+  openRandomWindow();
+}
+
+// listen for child closing message
+window.addEventListener("message", (event) => {
+  if (event.data === "childClosed") {
+
+    // open THREE new windows
+    for (let i = 0; i < 3; i++) {
+      openRandomWindow();
+    }
+  }
+});
+</script>
+
+</body>
+</html>
